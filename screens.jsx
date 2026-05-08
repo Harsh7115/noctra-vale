@@ -60,13 +60,6 @@ function Hero({ reelIndex, onReel, onProduct }) {
           <div className="hero-frame"><div className="film film-3"><div className="film-shape"></div></div></div>
         </div>
 
-        <div className="hero-meta">
-          <span className="row"><b>FILM</b> {String(reelIndex + 1).padStart(2,'0')} / 03</span>
-          <span className="row">RUNTIME · 02:14</span>
-          <span className="row">SHOT · BERLIN, 04:11</span>
-          <span className="row">DIR · NOCTRA STUDIO</span>
-        </div>
-
         <div className="hero-copy" key={reelIndex}>
           <span className="eyebrow">{line.eyebrow}</span>
           <h1>

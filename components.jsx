@@ -119,7 +119,6 @@ function TopBar({ onMenu, onCart, cartCount, time }) {
       <div className="left">
         <button className="icon-btn" onClick={onMenu} aria-label="Open menu">
           <span className="bars"><span></span><span></span></span>
-          <span>Index</span>
         </button>
       </div>
       <a href="#" className="brand-mark" onClick={(e) => e.preventDefault()}>
@@ -140,16 +139,14 @@ function BottomBar({ scene, reelIndex, reelCount }) {
   return (
     <div className="bottombar">
       <div className="crumb">
-        <span>NV / ARCHIVE 01 /</span>
         <span>{scene.toUpperCase()}</span>
       </div>
       <div className="reel">
-        <span style={{ marginRight: 14 }}>FRAME</span>
         {Array.from({ length: reelCount }).map((_, i) => (
           <span key={i} className={"pill" + (i === reelIndex ? " active" : "")}></span>
         ))}
       </div>
-      <div>VOL · 1.0  /  STILLNESS PROTOCOL</div>
+      <div></div>
     </div>
   );
 }
@@ -163,18 +160,12 @@ function Menu({ open, onClose, onNavigate }) {
   }, [open, hover]);
 
   const items = [
-    { id: 'home',       label: 'Home',       glyph: 'I',    mood: 'home',
-      sub: 'Soft cinematic motion · ambient particles', prev: 'preview-home' },
-    { id: 'collection', label: 'Collection', glyph: 'II',   mood: 'collection',
-      sub: 'Floating garments · fabric closeups',       prev: 'preview-coll' },
-    { id: 'archive',    label: 'Archive',    glyph: 'III',  mood: 'archive',
-      sub: 'Forgotten files · timestamped fragments',   prev: 'preview-archive' },
-    { id: 'campaign',   label: 'Campaign',   glyph: 'IV',   mood: 'campaign',
-      sub: 'Fashion films · stylized worlds',           prev: 'preview-camp' },
-    { id: 'about',      label: 'About',      glyph: 'V',    mood: 'about',
-      sub: 'A quiet manifesto · the universe',          prev: 'preview-about' },
-    { id: 'cart',       label: 'Cart',       glyph: 'VI',   mood: 'cart',
-      sub: 'Premium packaging · stillness',             prev: 'preview-cart' },
+    { id: 'home',       label: 'Home',       mood: 'home',       prev: 'preview-home' },
+    { id: 'collection', label: 'Collection', mood: 'collection', prev: 'preview-coll' },
+    { id: 'archive',    label: 'Archive',    mood: 'archive',    prev: 'preview-archive' },
+    { id: 'campaign',   label: 'Campaign',   mood: 'campaign',   prev: 'preview-camp' },
+    { id: 'about',      label: 'About',      mood: 'about',      prev: 'preview-about' },
+    { id: 'cart',       label: 'Cart',       mood: 'cart',       prev: 'preview-cart' },
   ];
 
   return (
@@ -195,22 +186,11 @@ function Menu({ open, onClose, onNavigate }) {
                  onMouseEnter={() => setHover(item.mood)}
                  onMouseLeave={() => setHover(null)}
                  onClick={(e) => { e.preventDefault(); onNavigate(item.id); }}>
-                <span style={{ display: 'flex', alignItems: 'baseline', gap: 24 }}>
-                  <span className="num">{item.glyph}</span>
-                  <span style={{ position: 'relative' }}>
-                    {item.label}
-                    <span className="preview"><span className={"pv " + item.prev}></span></span>
-                  </span>
+                <span style={{ position: 'relative' }}>
+                  {item.label}
+                  <span className="preview"><span className={"pv " + item.prev}></span></span>
                 </span>
-                <span className="glyph">↗ ENTER</span>
               </a>
-              <div style={{
-                fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.22em',
-                textTransform: 'uppercase', color: 'var(--chrome-3)',
-                paddingBottom: 8, paddingLeft: 38, marginTop: -12, opacity: 0.7
-              }}>
-                {item.sub}
-              </div>
             </li>
           ))}
         </ul>
