@@ -4,32 +4,6 @@
 (function() {
   'use strict';
 
-  // ─── Cursor follow ───
-  const cursor = document.getElementById('cursor');
-  if (cursor) {
-    let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
-    let cx = tx, cy = ty;
-    window.addEventListener('mousemove', (e) => {
-      tx = e.clientX; ty = e.clientY;
-    });
-    function tick() {
-      cx += (tx - cx) * 0.18;
-      cy += (ty - cy) * 0.18;
-      cursor.style.transform = `translate(${cx}px, ${cy}px)`;
-      requestAnimationFrame(tick);
-    }
-    tick();
-
-    // hover state
-    document.addEventListener('mouseover', (e) => {
-      const t = e.target;
-      if (!t.closest) return;
-      const hover = t.closest('a, button, [data-hover], .coll-card, .archive-row, .menu-list li, .sigil, .size-chip, .nav-arrow');
-      const text = t.closest('input, textarea, [contenteditable]');
-      document.body.dataset.cursor = hover ? 'hover' : (text ? 'text' : '');
-    });
-  }
-
   // ─── Atmosphere mood orbs follow mouse parallax ───
   const orbs = document.querySelectorAll('.atm-orb');
   let mx = 0, my = 0;

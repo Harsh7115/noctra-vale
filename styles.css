@@ -35,11 +35,7 @@ body {
   font-weight: 300;
   letter-spacing: 0.02em;
   overflow: hidden;
-  cursor: none;
 }
-
-/* show native cursor on inputs */
-input, textarea, select { cursor: text; }
 
 /* ─── Ambient atmosphere ─── */
 .atmosphere {
@@ -117,32 +113,6 @@ body[data-mood="about"]      .atm-gradient { filter: saturate(0.7); }
 body[data-mood="about"]      .atm-orb-a { background: radial-gradient(circle, oklch(55% 0.1 250 / 0.5), transparent 65%); }
 body[data-mood="cart"]       .atm-orb-a { transform: translate(0, -10vmax); opacity: 0.3; }
 body[data-mood="cart"]       .atm-orb-b { opacity: 0.25; }
-
-/* ─── Custom cursor ─── */
-.cursor {
-  position: fixed; top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-}
-.cursor-ring {
-  position: absolute;
-  width: 36px; height: 36px;
-  border: 1px solid var(--chrome);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.4s var(--ease), height 0.4s var(--ease), border-color 0.4s var(--ease);
-  opacity: 0.7;
-}
-.cursor-dot {
-  position: absolute;
-  width: 4px; height: 4px;
-  background: var(--chrome);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-body[data-cursor="hover"] .cursor-ring { width: 64px; height: 64px; }
-body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius: 1px; }
 
 /* ─── Toast / poetic line ─── */
 .toast {
@@ -248,7 +218,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   color: var(--chrome-2);
   font-family: var(--sans); font-size: 11px;
   text-transform: uppercase; letter-spacing: 0.22em;
-  cursor: none;
+  cursor: pointer;
   padding: 10px 14px;
   display: inline-flex; align-items: center; gap: 10px;
   transition: color 0.4s var(--ease);
@@ -420,7 +390,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   display: grid; place-items: center;
-  cursor: none;
+  cursor: pointer;
   color: var(--chrome);
   transition: transform 0.4s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease);
 }
@@ -437,7 +407,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   left: 5vw; bottom: 12vh;
   width: 64px; height: 64px;
   display: grid; place-items: center;
-  cursor: none;
+  cursor: pointer;
   z-index: 6;
   opacity: 0.07;
   transition: opacity 1.4s var(--ease), transform 1.4s var(--ease);
@@ -509,7 +479,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   background: transparent;
   display: grid; place-items: center;
   color: var(--chrome);
-  cursor: none;
+  cursor: pointer;
   transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
 }
 .menu-close:hover { background: oklch(94% 0.005 280 / 0.08); transform: rotate(90deg); }
@@ -541,7 +511,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   letter-spacing: -0.01em;
   color: var(--chrome);
   text-decoration: none;
-  cursor: none;
+  cursor: pointer;
   transition: color 0.5s var(--ease), letter-spacing 0.6s var(--ease), padding 0.6s var(--ease);
 }
 .menu-list a:hover {
@@ -643,7 +613,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
 }
 .coll-card {
   position: relative;
-  cursor: none;
+  cursor: pointer;
   overflow: hidden;
 }
 .coll-card .frame {
@@ -909,7 +879,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   border: 1px solid var(--line);
   background: transparent;
   color: var(--chrome-2);
-  cursor: none;
+  cursor: pointer;
   transition: border-color 0.4s var(--ease), color 0.4s var(--ease), background 0.4s var(--ease);
 }
 .size-chip:hover { color: var(--chrome); border-color: oklch(94% 0.005 280 / 0.4); }
@@ -931,7 +901,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   border: 1px solid var(--chrome);
   background: var(--chrome);
   color: var(--bg);
-  cursor: none;
+  cursor: pointer;
   transition: background 0.5s var(--ease), color 0.5s var(--ease), letter-spacing 0.5s var(--ease);
   position: relative; overflow: hidden;
 }
@@ -1008,7 +978,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   gap: 24px; align-items: center;
   padding: 20px 0;
   border-bottom: 1px solid var(--line-soft);
-  cursor: none;
+  cursor: pointer;
   transition: padding 0.6s var(--ease), background 0.6s var(--ease);
   position: relative;
 }
@@ -1168,7 +1138,7 @@ body[data-cursor="text"] .cursor-ring { width: 2px; height: 22px; border-radius:
   font-family: var(--mono); font-size: 10px;
   letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--chrome-3);
-  cursor: none;
+  cursor: pointer;
   transition: color 0.4s var(--ease);
 }
 .found-modal .dismiss:hover { color: var(--chrome); }
