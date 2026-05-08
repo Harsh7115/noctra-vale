@@ -4,17 +4,19 @@
 (function() {
   'use strict';
 
-  // ─── Atmosphere mood orbs follow mouse parallax ───
+  // ─── Atmosphere mood orbs follow mouse parallax (lerped) ───
   const orbs = document.querySelectorAll('.atm-orb');
-  let mx = 0, my = 0;
+  let tx = 0, ty = 0, lx = 0, ly = 0;
   window.addEventListener('mousemove', (e) => {
-    mx = (e.clientX / window.innerWidth - 0.5) * 2;
-    my = (e.clientY / window.innerHeight - 0.5) * 2;
+    tx = (e.clientX / window.innerWidth - 0.5) * 2;
+    ty = (e.clientY / window.innerHeight - 0.5) * 2;
   });
   function parallax() {
+    lx += (tx - lx) * 0.04;
+    ly += (ty - ly) * 0.04;
     orbs.forEach((o, i) => {
-      const k = (i + 1) * 8;
-      o.style.transform = `translate(${mx * k}px, ${my * k}px)`;
+      const k = (i + 1) * 6;
+      o.style.transform = `translate(${lx * k}px, ${ly * k}px)`;
     });
     requestAnimationFrame(parallax);
   }

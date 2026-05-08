@@ -62,7 +62,7 @@ body {
   border-radius: 50%;
   filter: blur(120px);
   opacity: 0.55;
-  transition: transform 2.4s var(--ease), opacity 1.2s var(--ease), background 1.2s var(--ease);
+  transition: opacity 1.2s var(--ease), background 1.2s var(--ease);
   will-change: transform, opacity;
 }
 .atm-orb-a { background: radial-gradient(circle, oklch(55% 0.22 310 / 0.6), transparent 65%); top: -20vmax; left: 30vmax; }
@@ -277,7 +277,7 @@ body[data-mood="cart"]       .atm-orb-b { opacity: 0.25; }
 .hero-reel {
   position: absolute; inset: 0;
   display: flex;
-  transition: transform 1.4s var(--ease);
+  transition: transform 1.1s var(--ease);
   will-change: transform;
 }
 .hero-frame {
@@ -454,7 +454,7 @@ body[data-mood="cart"]       .atm-orb-b { opacity: 0.25; }
   background: linear-gradient(180deg, oklch(9% 0.012 285 / 0.92), oklch(7% 0.012 285 / 0.95));
   border-right: 1px solid var(--line);
   transform: translateX(-100%);
-  transition: transform 0.9s var(--ease);
+  transition: transform 0.75s var(--ease);
   padding: 32px 40px;
   display: flex; flex-direction: column;
   overflow: hidden;
@@ -1181,11 +1181,11 @@ body[data-night="true"] .night-badge { display: inline-flex; }
 
 /* page transitions */
 .page {
-  animation: pageIn 0.9s var(--ease);
+  animation: pageIn 0.7s var(--ease);
 }
 @keyframes pageIn {
-  from { opacity: 0; transform: translateY(12px); filter: blur(8px); }
-  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* archive scene additional flicker */
@@ -1198,27 +1198,6 @@ body[data-night="true"] .night-badge { display: inline-flex; }
   transition: opacity 0.5s var(--ease);
 }
 .archive-row:hover::before { opacity: 1; }
-
-/* keyboard hint */
-.kbd-hint {
-  position: fixed;
-  left: 32px; bottom: 64px;
-  z-index: 30;
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--chrome-3);
-  display: flex; gap: 12px; align-items: center;
-  pointer-events: none;
-}
-.kbd-hint kbd {
-  font-family: var(--mono);
-  padding: 4px 8px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  font-size: 9px;
-  color: var(--chrome-2);
-  background: oklch(8% 0.01 285 / 0.5);
-}
 
 /* small screens */
 @media (max-width: 680px) {

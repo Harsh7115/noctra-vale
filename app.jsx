@@ -119,12 +119,6 @@ function App() {
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onCheckout={() => window.NV.whisper("Stillness Protocol initiated · linen wrapped at dawn.", 3000)} />
       <FoundModal open={foundOpen} onClose={() => setFoundOpen(false)} />
 
-      <div className="kbd-hint">
-        <kbd>M</kbd> menu
-        <kbd>← →</kbd> reel
-        <kbd>esc</kbd> close
-      </div>
-
       <div className="night-badge">
         <span className="pulse"></span>
         After-hours visuals · 21:00 — 06:00
