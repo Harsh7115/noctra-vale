@@ -261,20 +261,42 @@ function Menu({ open, onClose, onNavigate }) {
           ))}
         </ul>
 
-        <div className="menu-foot">
-          <div className="col">
-            <span>Coordinates</span>
-            <b>52.5° N / 13.4° E</b>
+        <footer className="menu-foot">
+          {/* Section 1 — Coordinates */}
+          <div className="menu-foot-col">
+            <span className="menu-foot-label">Coordinates</span>
+            <span className="menu-foot-value coords">
+              37.8136° S<br/>144.9631° E
+            </span>
           </div>
-          <div className="col">
-            <span>Drop</span>
-            <b>01 · MMXXVI</b>
+
+          {/* Section 2 — Drop (config-driven) */}
+          <div className="menu-foot-col">
+            <span className="menu-foot-label">Current Drop</span>
+            <span className="menu-foot-value drop-name">
+              {(window.NV_CONFIG && window.NV_CONFIG.drop) || 'Noctis Veil'}
+            </span>
           </div>
-          <div className="col">
-            <span>Members</span>
-            <b>0184 / 0500</b>
+
+          {/* Section 3 — Members (role-gated) */}
+          <div className="menu-foot-col">
+            <span className="menu-foot-label">Members</span>
+            {window.NV_CONFIG && window.NV_CONFIG.isAdmin ? (
+              <span className="menu-foot-value">
+                <span className="member-count">
+                  {String(window.NV_CONFIG.memberCount).padStart(4, '0')}
+                </span>
+                <br/>
+                <span style={{ fontSize: 8, letterSpacing: '0.32em', opacity: 0.5 }}>LIVE COUNT</span>
+              </span>
+            ) : (
+              <span className="menu-foot-value access">
+                <span className="access-dot"></span>
+                Private Access
+              </span>
+            )}
           </div>
-        </div>
+        </footer>
       </aside>
     </div>
   );

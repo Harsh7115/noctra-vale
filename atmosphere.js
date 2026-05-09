@@ -47,4 +47,10 @@
     document.body.dataset.mood = mood || 'home';
   };
   document.body.dataset.mood = 'home';
+
+  // ─── Site config (edit here or override from a CMS/admin layer) ───
+  window.NV_CONFIG = window.NV_CONFIG || {};
+  window.NV_CONFIG.drop        = window.NV_CONFIG.drop        || 'NOCTIS VEIL';
+  window.NV_CONFIG.isAdmin     = window.NV_CONFIG.isAdmin     || false;
+  window.NV_CONFIG.memberCount = window.NV_CONFIG.memberCount || 284;
 })();
