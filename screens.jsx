@@ -51,10 +51,47 @@ function Hero({ reelIndex, onReel, onProduct }) {
   ];
   const line = lines[reelIndex];
 
+  const [dragOffset, setDragOffset] = useState(0);
+  const drag = useRef({ active: false, startX: 0, startY: 0, isHorizontal: null });
+
+  function dragStart(x, y) {
+    drag.current = { active: true, startX: x, startY: y, isHorizontal: null };
+  }
+  function dragMove(x, y) {
+    const d = drag.current;
+    if (!d.active) return;
+    const dx = x - d.startX;
+    const dy = y - d.startY;
+    if (d.isHorizontal === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+      d.isHorizontal = Math.abs(dx) >= Math.abs(dy);
+    }
+    if (d.isHorizontal) setDragOffset(dx * 0.35);
+  }
+  function dragEnd(x) {
+    const d = drag.current;
+    if (!d.active) return;
+    d.active = false;
+    const dx = x - d.startX;
+    setDragOffset(0);
+    if (Math.abs(dx) > 50) onReel(dx < 0 ? 1 : -1);
+  }
+
   return (
     <section className="scene page" data-screen-label="01 Hero">
-      <div className="hero">
-        <div className="hero-reel" style={{ transform: `translateX(-${reelIndex * 100}%)` }}>
+      <div className="hero"
+        style={{ userSelect: 'none' }}
+        onTouchStart={e => dragStart(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchMove={e => dragMove(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchEnd={e => dragEnd(e.changedTouches[0].clientX)}
+        onMouseDown={e => { if (e.button === 0) dragStart(e.clientX, e.clientY); }}
+        onMouseMove={e => dragMove(e.clientX, e.clientY)}
+        onMouseUp={e => dragEnd(e.clientX)}
+        onMouseLeave={e => { if (drag.current.active) dragEnd(e.clientX); }}
+      >
+        <div className="hero-reel" style={{
+          transform: `translateX(calc(-${reelIndex * 100}% + ${dragOffset}px))`,
+          transition: dragOffset !== 0 ? 'none' : undefined
+        }}>
           <div className="hero-frame"><div className="film film-1"><div className="film-shape"></div></div></div>
           <div className="hero-frame"><div className="film film-2"><div className="film-shape"></div></div></div>
           <div className="hero-frame"><div className="film film-3"><div className="film-shape"></div></div></div>
