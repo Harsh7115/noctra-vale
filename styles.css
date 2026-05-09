@@ -268,11 +268,49 @@ body[data-mood="cart"]       .atm-orb-b { opacity: 0.25; }
 }
 .bottombar .reel .pill.active { background: var(--chrome); width: 56px; }
 
-/* ─── HOME / hero ─── */
+/* ─── HOME / hero — horizontal ─── */
 .scene { position: relative; height: 100vh; width: 100%; z-index: 1; }
 .hero {
   position: absolute; inset: 0;
   overflow: hidden;
+}
+
+/* ─── HOME / hero — vertical (vertical/ variant) ─── */
+.hero-vert-section {
+  position: relative;
+  z-index: 1;
+}
+.hero-vert-wrapper {
+  height: 100vh;
+  position: relative;
+}
+.hero-vert-frame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 36px; left: 50%;
+  transform: translateX(-50%);
+  color: var(--chrome-3);
+  opacity: 0;
+  animation: scrollHintFade 3s var(--ease) 1.8s forwards,
+             scrollBounce 2.2s ease-in-out 1.8s infinite;
+  pointer-events: none;
+}
+.hero-scroll-hint svg {
+  width: 12px; height: 18px;
+  display: block;
+}
+@keyframes scrollHintFade {
+  from { opacity: 0; }
+  to   { opacity: 0.35; }
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(5px); }
 }
 .hero-reel {
   position: absolute; inset: 0;
