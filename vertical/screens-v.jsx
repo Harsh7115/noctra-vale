@@ -28,27 +28,30 @@
   ];
 
   function HeroVertical({ reelIndex, onReel }) {
-    const wrapperRefs = useRef([]);
+    const containerRef  = useRef(null);
+    const wrapperRefs   = useRef([]);
     const currentIdxRef = useRef(reelIndex);
+    const [activeFrame, setActiveFrame] = useState(0);
 
-    // Keep ref in sync without triggering the effect again
+    // Keep ref current without re-running the observer effect
     useEffect(() => { currentIdxRef.current = reelIndex; }, [reelIndex]);
 
-    // IntersectionObserver — updates reel pills in the bottom bar
+    // IntersectionObserver — fires when a frame fully snaps into view
     useEffect(() => {
-      const app = document.querySelector('.app');
-      if (!app) return;
+      const container = containerRef.current;
+      if (!container) return;
 
       const observers = wrapperRefs.current.map((el, i) => {
         if (!el) return null;
         const obs = new IntersectionObserver(
           ([entry]) => {
             if (entry.isIntersecting) {
+              setActiveFrame(i);                          // re-triggers copy animation
               const delta = i - currentIdxRef.current;
-              if (delta !== 0) onReel(delta);
+              if (delta !== 0) onReel(delta);             // syncs bottom bar pills
             }
           },
-          { threshold: 0.55, root: app }
+          { threshold: 0.6, root: container }
         );
         obs.observe(el);
         return obs;
@@ -59,20 +62,25 @@
 
     return (
       <section className="hero-vert-section page" data-screen-label="01 Hero">
-        {FRAMES.map((frame, i) => (
-          <div
-            key={i}
-            className="hero-vert-wrapper"
-            ref={el => wrapperRefs.current[i] = el}
-          >
-            <div className="hero-vert-frame">
+        <div ref={containerRef} className="hero-vert-scroll">
+          {FRAMES.map((frame, i) => (
+            <div
+              key={i}
+              className="hero-vert-wrapper"
+              ref={el => wrapperRefs.current[i] = el}
+            >
               {/* Film background */}
-              <div className={`film ${frame.film}`}>
-                <div className="film-shape"></div>
+              <div className="hero-vert-frame">
+                <div className={`film ${frame.film}`}>
+                  <div className="film-shape"></div>
+                </div>
               </div>
 
-              {/* Copy — re-animates each time it enters the viewport */}
-              <div className="hero-copy" key={`copy-${i}`}>
+              {/* Copy — remounts on each snap so Reveal re-animates */}
+              <div
+                className="hero-copy"
+                key={activeFrame === i ? `${i}-visible` : `${i}-hidden`}
+              >
                 <span className="eyebrow">{frame.eyebrow}</span>
                 <h1>
                   <Reveal stagger={0.05}>{frame.h1a}</Reveal><br />
@@ -83,7 +91,7 @@
                 </span>
               </div>
 
-              {/* Scroll hint on all but the last frame */}
+              {/* Scroll hint on frames 1 and 2 */}
               {i < FRAMES.length - 1 && (
                 <div className="hero-scroll-hint" aria-hidden="true">
                   <svg viewBox="0 0 12 18" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
@@ -93,8 +101,8 @@
                 </div>
               )}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
     );
   }

@@ -278,17 +278,27 @@ body[data-mood="cart"]       .atm-orb-b { opacity: 0.25; }
 /* ─── HOME / hero — vertical (vertical/ variant) ─── */
 .hero-vert-section {
   position: relative;
+  height: 100vh;
+  overflow: hidden;
   z-index: 1;
 }
+.hero-vert-scroll {
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+.hero-vert-scroll::-webkit-scrollbar { display: none; }
 .hero-vert-wrapper {
   height: 100vh;
   position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 .hero-vert-frame {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
 }
 .hero-scroll-hint {
   position: absolute;
