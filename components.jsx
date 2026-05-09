@@ -113,7 +113,7 @@ function Embroidery() {
 }
 
 /* Top bar */
-function TopBar({ onMenu, onCart, cartCount, time }) {
+function TopBar({ onMenu, onSearch, onCart, cartCount, time }) {
   return (
     <div className="topbar">
       <div className="left">
@@ -126,9 +126,75 @@ function TopBar({ onMenu, onCart, cartCount, time }) {
       </a>
       <div className="right">
         <span className="timecode">{time}</span>
+        <button className="icon-btn" onClick={onSearch} aria-label="Search">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.3">
+            <circle cx="6" cy="6" r="4.5" />
+            <path d="M9.5 9.5 L13 13" strokeLinecap="round" />
+          </svg>
+        </button>
         <button className="icon-btn" onClick={onCart} aria-label="Cart">
           Cart<span style={{ color: 'var(--chrome)', marginLeft: 6 }}>({cartCount})</span>
         </button>
+      </div>
+    </div>
+  );
+}
+
+/* Search overlay */
+function SearchOverlay({ open, onClose, onProduct }) {
+  const [query, setQuery] = useState('');
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current && inputRef.current.focus(), 80);
+    else setQuery('');
+  }, [open]);
+
+  const results = query.trim().length > 0
+    ? (window.NV_PIECES || []).filter(p => {
+        const q = query.toLowerCase();
+        return p.name.toLowerCase().includes(q)
+          || p.type.toLowerCase().includes(q)
+          || p.code.toLowerCase().includes(q)
+          || p.fabric.toLowerCase().includes(q);
+      })
+    : [];
+
+  return (
+    <div className={"search-overlay" + (open ? " open" : "")}>
+      <div className="scrim" onClick={onClose}></div>
+      <div className="search-panel">
+        <div className="search-input-row">
+          <svg viewBox="0 0 14 14">
+            <circle cx="6" cy="6" r="4.5" />
+            <path d="M9.5 9.5 L13 13" strokeLinecap="round" />
+          </svg>
+          <input
+            ref={inputRef}
+            className="search-input"
+            type="text"
+            placeholder="Search pieces…"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+          />
+          <button className="search-close" onClick={onClose}>Esc</button>
+        </div>
+        {query.trim() && results.length === 0 && (
+          <div className="search-empty">No pieces found for "{query}"</div>
+        )}
+        {results.length > 0 && (
+          <ul className="search-results">
+            {results.map(p => (
+              <li key={p.id} className="search-result" onClick={() => { onProduct(p.id); onClose(); }}>
+                <span className="search-result-name">{p.name}</span>
+                <span className="search-result-meta">{p.type} · €{p.price}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {!query.trim() && (
+          <div className="search-hint">Start typing to search the collection</div>
+        )}
       </div>
     </div>
   );
@@ -313,4 +379,4 @@ function CartDrawer({ open, onClose, items, onCheckout }) {
   );
 }
 
-window.NVUI = { Sigil, Reveal, GarmentSilhouette, Embroidery, TopBar, BottomBar, Menu, HiddenSigil, FoundModal, CartDrawer };
+window.NVUI = { Sigil, Reveal, GarmentSilhouette, Embroidery, TopBar, BottomBar, Menu, HiddenSigil, FoundModal, CartDrawer, SearchOverlay };

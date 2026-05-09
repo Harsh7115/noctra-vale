@@ -1,6 +1,6 @@
 /* Noctra Vale — app shell */
 const { useState, useEffect, useMemo } = React;
-const { TopBar, BottomBar, Menu, HiddenSigil, FoundModal, CartDrawer } = window.NVUI;
+const { TopBar, BottomBar, Menu, HiddenSigil, FoundModal, CartDrawer, SearchOverlay } = window.NVUI;
 const { Hero, Collection, Product, Archive } = window.NVScreens;
 
 function useClock() {
@@ -23,6 +23,7 @@ function App() {
   const [reel, setReel] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [foundOpen, setFoundOpen] = useState(false);
   const [cart, setCart] = useState([]);
   const time = useClock();
@@ -38,6 +39,7 @@ function App() {
     function onKey(e) {
       if (e.key === 'Escape') {
         if (foundOpen) setFoundOpen(false);
+        else if (searchOpen) setSearchOpen(false);
         else if (menuOpen) setMenuOpen(false);
         else if (cartOpen) setCartOpen(false);
       }
@@ -49,7 +51,7 @@ function App() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [scene, menuOpen, cartOpen, foundOpen]);
+  }, [scene, menuOpen, cartOpen, searchOpen, foundOpen]);
 
   function navigate(id) {
     setMenuOpen(false);
@@ -90,6 +92,7 @@ function App() {
     <>
       <TopBar
         onMenu={() => setMenuOpen(true)}
+        onSearch={() => setSearchOpen(true)}
         onCart={() => setCartOpen(true)}
         cartCount={cart.reduce((s, i) => s + i.qty, 0)}
         time={time}
@@ -117,6 +120,7 @@ function App() {
 
       <Menu open={menuOpen} onClose={() => setMenuOpen(false)} onNavigate={navigate} />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onCheckout={() => window.NV.whisper("Stillness Protocol initiated · linen wrapped at dawn.", 3000)} />
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} onProduct={(id) => { openProduct(id); setSearchOpen(false); }} />
       <FoundModal open={foundOpen} onClose={() => setFoundOpen(false)} />
 
       <div className="night-badge">
